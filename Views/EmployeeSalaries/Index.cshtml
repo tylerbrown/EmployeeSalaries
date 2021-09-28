@@ -1,0 +1,50 @@
+﻿@model EmployeeSalaries.Models.EmployeeDataModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Index", "EmployeeSalaries", FormMethod.Get))
+{
+    <span id="dateSpan" value="01-01-2011">Enter Date: </span>
+    <input id="inputDate" value="1-2-2021" type="date" name="selectedDate" />
+    <input id="submitInput" type="submit" value="Search Date" />
+}
+
+<p>
+    TOTAL SALARY: @Model.totalSalary
+</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.testName)
+            @Model.testName
+        </th>
+        <th>
+            def
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.EmployeeData)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+        </tr>
+    }
+
+</table>
