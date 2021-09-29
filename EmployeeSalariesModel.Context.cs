@@ -86,5 +86,32 @@ namespace EmployeeSalaries
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchDate_Result>("SearchSalaryByDate", enteredDateParameter);
         }
+    
+        public virtual ObjectResult<SearchAllEntriesByDate_Result> SearchAllEntriesByDate(Nullable<System.DateTime> enteredDate)
+        {
+            var enteredDateParameter = enteredDate.HasValue ?
+                new ObjectParameter("enteredDate", enteredDate) :
+                new ObjectParameter("enteredDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchAllEntriesByDate_Result>("SearchAllEntriesByDate", enteredDateParameter);
+        }
+    
+        public virtual ObjectResult<SalaryTable> SearchAllEntries(Nullable<System.DateTime> enteredDate)
+        {
+            var enteredDateParameter = enteredDate.HasValue ?
+                new ObjectParameter("enteredDate", enteredDate) :
+                new ObjectParameter("enteredDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SalaryTable>("SearchAllEntries", enteredDateParameter);
+        }
+    
+        public virtual ObjectResult<SalaryTable> SearchAllEntries(Nullable<System.DateTime> enteredDate, MergeOption mergeOption)
+        {
+            var enteredDateParameter = enteredDate.HasValue ?
+                new ObjectParameter("enteredDate", enteredDate) :
+                new ObjectParameter("enteredDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SalaryTable>("SearchAllEntries", mergeOption, enteredDateParameter);
+        }
     }
 }

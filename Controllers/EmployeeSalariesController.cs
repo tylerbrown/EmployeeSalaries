@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EmployeeSalaries.Controllers
@@ -12,60 +11,144 @@ namespace EmployeeSalaries.Controllers
     public class EmployeeSalariesController : Controller
     {
         // Define model as volatile so that it can be modified by multiple threads
-        private volatile EmployeeDataModel salaryTable;
+        private volatile EmployeeDisplayModel employeeDataDisplay;
 
-        // GET: EmployeeSalaries
+        /* GET: EmployeeSalaries
+         * This method takes a date and will create a data model that contains 
+         *  a list of employees with their names, salaries, and salary date as well
+         *  as an employee count, combine average salary, and total salary for the given date
+         */
         public ActionResult Index(DateTime? selectedDate)
         {
-           // if (selectedDate == null)
+            // Create the model object that will hold all the employee data
+            employeeDataDisplay = new EmployeeDisplayModel();
+
+            // Check if no date is selected
+            if (selectedDate == null)
             {
-                //selectedDate = DateTime.Today;
+                // Default to todays date
+                selectedDate = DateTime.Today;
             }
 
+            // Update the data model with the selected date
+            employeeDataDisplay.queryDate = selectedDate.Value.ToString("yyyy-MM-dd");
 
-
-            //IEnumerable<EmployeeDisplayModel> salaryTable = null;
-             salaryTable = new EmployeeDataModel();
-            salaryTable.testName = "TEST!";
-            
+            // Create an http client to make api calls
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:44354/api/");
 
-            // Call inmported function call to Stored Procedure
+            // Make api call to get latest salaries prior to selected date
             var callAPI = client.GetAsync("EmployeeSalarySearch?selectedDate=" + selectedDate);
             callAPI.Wait();
 
+            // Get the data from the api call
             var returnData = callAPI.Result;
+
+            // Check for success
+            if (returnData.IsSuccessStatusCode)
+            {
+                // Read in the employee data
+                var employeeData = returnData.Content.ReadAsAsync<IList<EmployeeDataModel>>();
+                employeeData.Wait();
+                var employeeDataResult = employeeData.Result;
+
+                // Store the employee data of the top 1000 salaries
+                employeeDataDisplay.EmployeeData = employeeDataResult.Take(1000);
+
+                // Store the employee count
+                employeeDataDisplay.employeeCount = employeeDataResult.Count;
+
+                // Create total and average threads
+                Thread averageSalaryThread = new Thread(() => calculateCombinedAverageSalaries(employeeDataResult));
+                Thread totalSalaryThread = new Thread(() => calculateSalariesTotal(employeeDataResult));
+
+                // Start the threads
+                averageSalaryThread.Start();
+                totalSalaryThread.Start();
+
+                // Wait for threads to complete
+                averageSalaryThread.Join();
+                totalSalaryThread.Join();
+            }
+
+
+            /*
+
+            // Make api call to get latest salaries prior to selected date
+            callAPI = client.GetAsync("EmployeeSalarySearchAllEntries?selectedDate=" + selectedDate);
+            callAPI.Wait();
+
+            returnData = callAPI.Result;
 
             if (returnData.IsSuccessStatusCode)
             {
-                var displayEmployees = returnData.Content.ReadAsAsync<IList<EmployeeDisplayModel>>();
-                displayEmployees.Wait();
-                salaryTable.EmployeeData = displayEmployees.Result;
+                var data = returnData.Content.ReadAsAsync<IList<SalaryTable>>();
+                data.Wait();
+                IEnumerable<SalaryTable> allEntries = data.Result;
+
+                Thread averageSalaryThread = new Thread(() => calculateCombinedAverageSalaries(allEntries, selectedDate));
+                averageSalaryThread.Start();
+                averageSalaryThread.Join();
             }
 
-            Thread totalSalaryThread = new Thread(new ThreadStart(calculateTotalEmployeeSalary));
+            SalaryTable salaryTable;
+
+
+
+            //Thread totalSalaryThread = new Thread(new ThreadStart(calculateTotalEmployeeSalary));
+            Thread totalSalaryThread = new Thread(() => calculateTotalToDate(selectedDate));
             totalSalaryThread.Start();
 
 
             // join so that page will wait untill thread are done
             totalSalaryThread.Join();
-
-            return View(salaryTable);
+            */
+            return View(employeeDataDisplay);
         }
 
-        public void calculateTotalEmployeeSalary()
+        /* 
+         This method will take a list of employees and calculate their average salaries
+         */
+        public void calculateCombinedAverageSalaries(IEnumerable<EmployeeDataModel> allEmployeeSalaries)
         {
-            salaryTable.testName = "THREAD changed it";
+            /*
+            employeeDataDisplay.averageSalary = allEmployeeSalaries
+                .GroupBy(e => e.EmpID)
+                .Select(e => e.Select(s => s.Salary).Average())
+                .Sum();
+            */
 
+            // Define variable
             long totalSalary = 0;
 
-            foreach (var employee in salaryTable.EmployeeData)
+            // Loop through all employee salaries
+            foreach (var employee in allEmployeeSalaries)
             {
+                // Add employee salary to the total salary
                 totalSalary += employee.Salary;
             }
 
-            salaryTable.totalSalary = totalSalary;
+            // Calculate the average salary and store it
+            employeeDataDisplay.averageSalary = totalSalary / allEmployeeSalaries.Count();
+        }
+
+        /* 
+         This method will take a list of employees and calculate their total salaries
+         */
+        public void calculateSalariesTotal(IEnumerable<EmployeeDataModel> allEmployeeSalaries)
+        {
+            // Define variable
+            long totalSalary = 0;
+
+            // Loop through all employee salaries
+            foreach (var employee in allEmployeeSalaries)
+            {
+                // Add employee salary to the total salary
+                totalSalary += employee.Salary;
+            }
+
+            // Store total salary
+            employeeDataDisplay.totalSalary = totalSalary;
         }
     }
 }

@@ -34,6 +34,12 @@
     <FunctionImport Name="SearchSalaryByDate" ReturnType="Collection(EmployeeSalariesModel.SearchDate_Result)">
       <Parameter Name="enteredDate" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="SearchAllEntriesByDate" ReturnType="Collection(EmployeeSalariesModel.SearchAllEntriesByDate_Result)">
+      <Parameter Name="enteredDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SearchAllEntries" EntitySet="SalaryTables" ReturnType="Collection(EmployeeSalariesModel.SalaryTable)">
+      <Parameter Name="enteredDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SearchDateByRange_Result">
     <Property Type="Int32" Name="EmpID" Nullable="false" />
@@ -46,5 +52,10 @@
     <Property Type="DateTime" Name="Date" Nullable="false" />
     <Property Type="Int32" Name="EmpID" Nullable="false" />
     <Property Type="Int32" Name="Id" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SearchAllEntriesByDate_Result">
+    <Property Type="Int32" Name="EmpID" Nullable="false" />
+    <Property Type="Int64" Name="Salary" Nullable="false" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
   </ComplexType>
 </Schema>

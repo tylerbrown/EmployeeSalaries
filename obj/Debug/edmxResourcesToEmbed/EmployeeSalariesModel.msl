@@ -19,16 +19,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="SearchDateByRange" FunctionName="EmployeeSalariesModel.Store.SearchDateByRange">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EmployeeSalariesModel.SearchDateByRange_Result">
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="Salary" ColumnName="Salary" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="SearchEmployeeSalaryByDateRange" FunctionName="EmployeeSalariesModel.Store.SearchDateByRange" />
     <FunctionImportMapping FunctionImportName="SearchDate" FunctionName="EmployeeSalariesModel.Store.SearchDate">
       <ResultMapping>
         <ComplexTypeMapping TypeName="EmployeeSalariesModel.SearchDate_Result">
@@ -51,5 +41,15 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SearchAllEntriesByDate" FunctionName="EmployeeSalariesModel.Store.SearchAllEntriesByDate">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeSalariesModel.SearchAllEntriesByDate_Result">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SearchAllEntries" FunctionName="EmployeeSalariesModel.Store.SearchAllEntriesByDate" />
   </EntityContainerMapping>
 </Mapping>

@@ -7,8 +7,10 @@ namespace EmployeeSalaries.Models
 {
     public class EmployeeDataModel
     {
-        public IEnumerable<EmployeeDisplayModel> EmployeeData { get; set; }
-        public String testName { get; set; }
-        public long totalSalary { get; set; }
+        public int EmpID { get; set; }
+        public String Name { get; set; }
+        public long Salary { get; set; }
+        public System.DateTime Date { get; set; }
+        public int Id { get; set; }
     }
 }

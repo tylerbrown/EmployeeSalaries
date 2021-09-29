@@ -10,7 +10,9 @@ namespace EmployeeSalaries.Controllers
 {
     public class EmployeeSalarySearchController : ApiController
     {
-        // Function that makes call to Stored Procedure
+        /* 
+         This method will take a date and return the most recent employee information prior to the date
+         */
         public IHttpActionResult getEmployeeRecords(DateTime? selectedDate)
         {
             // Create connection entity

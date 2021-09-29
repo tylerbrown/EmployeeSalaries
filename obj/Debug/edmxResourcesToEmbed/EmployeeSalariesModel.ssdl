@@ -16,12 +16,11 @@
     <Property Name="Salary" Type="bigint" Nullable="false" />
     <Property Name="Date" Type="date" Nullable="false" />
   </EntityType>
-  <Function Name="SearchDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="SearchAllEntriesByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="enteredDate" Type="datetime" Mode="In" />
   </Function>
-  <Function Name="SearchDateByRange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="begindate" Type="datetime" Mode="In" />
-    <Parameter Name="enddate" Type="datetime" Mode="In" />
+  <Function Name="SearchDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="enteredDate" Type="datetime" Mode="In" />
   </Function>
   <EntityContainer Name="EmployeeSalariesModelStoreContainer">
     <EntitySet Name="NameTable" EntityType="Self.NameTable" Schema="dbo" store:Type="Tables" />

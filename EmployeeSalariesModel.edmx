@@ -21,12 +21,11 @@
           <Property Name="Salary" Type="bigint" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
         </EntityType>
-        <Function Name="SearchDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SearchAllEntriesByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="enteredDate" Type="datetime" Mode="In" />
         </Function>
-        <Function Name="SearchDateByRange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="begindate" Type="datetime" Mode="In" />
-          <Parameter Name="enddate" Type="datetime" Mode="In" />
+        <Function Name="SearchDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="enteredDate" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="EmployeeSalariesModelStoreContainer">
           <EntitySet Name="NameTable" EntityType="Self.NameTable" Schema="dbo" store:Type="Tables" />
@@ -70,6 +69,12 @@
           <FunctionImport Name="SearchSalaryByDate" ReturnType="Collection(EmployeeSalariesModel.SearchDate_Result)">
           <Parameter Name="enteredDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="SearchAllEntriesByDate" ReturnType="Collection(EmployeeSalariesModel.SearchAllEntriesByDate_Result)">
+          <Parameter Name="enteredDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SearchAllEntries" EntitySet="SalaryTables" ReturnType="Collection(EmployeeSalariesModel.SalaryTable)">
+          <Parameter Name="enteredDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SearchDateByRange_Result">
           <Property Type="Int32" Name="EmpID" Nullable="false" />
@@ -82,6 +87,11 @@
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <Property Type="Int32" Name="EmpID" Nullable="false" />
           <Property Type="Int32" Name="Id" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SearchAllEntriesByDate_Result">
+          <Property Type="Int32" Name="EmpID" Nullable="false" />
+          <Property Type="Int64" Name="Salary" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -107,16 +117,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SearchDateByRange" FunctionName="EmployeeSalariesModel.Store.SearchDateByRange">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EmployeeSalariesModel.SearchDateByRange_Result">
-                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SearchEmployeeSalaryByDateRange" FunctionName="EmployeeSalariesModel.Store.SearchDateByRange" />
           <FunctionImportMapping FunctionImportName="SearchDate" FunctionName="EmployeeSalariesModel.Store.SearchDate">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EmployeeSalariesModel.SearchDate_Result">
@@ -139,6 +139,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchAllEntriesByDate" FunctionName="EmployeeSalariesModel.Store.SearchAllEntriesByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeSalariesModel.SearchAllEntriesByDate_Result">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchAllEntries" FunctionName="EmployeeSalariesModel.Store.SearchAllEntriesByDate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

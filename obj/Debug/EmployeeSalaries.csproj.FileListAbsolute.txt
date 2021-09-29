@@ -78,7 +78,6 @@ C:\Users\tbrown\source\repos\EmployeeSalaries\bin\System.Web.WebPages.Deployment
 C:\Users\tbrown\source\repos\EmployeeSalaries\bin\System.Web.WebPages.Razor.xml
 C:\Users\tbrown\source\repos\EmployeeSalaries\bin\Antlr3.Runtime.pdb
 C:\Users\tbrown\source\repos\EmployeeSalaries\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\tbrown\source\repos\EmployeeSalaries\obj\Debug\EmployeeSalaries.csprojAssemblyReference.cache
 C:\Users\tbrown\source\repos\EmployeeSalaries\obj\Debug\EmployeeSalaries.csproj.CoreCompileInputs.cache
 C:\Users\tbrown\source\repos\EmployeeSalaries\obj\Debug\EmployeeSalaries.csproj.CopyComplete
 C:\Users\tbrown\source\repos\EmployeeSalaries\obj\Debug\EmployeeSalaries.dll
@@ -87,3 +86,4 @@ C:\Users\tbrown\source\repos\EmployeeSalaries\bin\EntityFramework.dll
 C:\Users\tbrown\source\repos\EmployeeSalaries\bin\EntityFramework.SqlServer.dll
 C:\Users\tbrown\source\repos\EmployeeSalaries\bin\EntityFramework.xml
 C:\Users\tbrown\source\repos\EmployeeSalaries\bin\EntityFramework.SqlServer.xml
+C:\Users\tbrown\source\repos\EmployeeSalaries\obj\Debug\EmployeeSalaries.csprojAssemblyReference.cache
