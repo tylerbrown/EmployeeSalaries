@@ -120,16 +120,24 @@ namespace EmployeeSalaries.Controllers
 
             // Define variable
             long totalSalary = 0;
+            long averageSalary = 0;
 
-            // Loop through all employee salaries
-            foreach (var employee in allEmployeeSalaries)
+            // Check if there are entries
+            if (allEmployeeSalaries.Count() > 0)
             {
-                // Add employee salary to the total salary
-                totalSalary += employee.Salary;
+                // Loop through all employee salaries
+                foreach (var employee in allEmployeeSalaries)
+                {
+                    // Add employee salary to the total salary
+                    totalSalary += employee.Salary;
+                }
+
+                // Calculate average salary
+                averageSalary = totalSalary / allEmployeeSalaries.Count();
             }
 
-            // Calculate the average salary and store it
-            employeeDataDisplay.averageSalary = totalSalary / allEmployeeSalaries.Count();
+            // Store average salary
+            employeeDataDisplay.averageSalary = averageSalary;
         }
 
         /* 
