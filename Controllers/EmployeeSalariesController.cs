@@ -28,7 +28,6 @@ namespace EmployeeSalaries.Controllers
             {
                 // Default to todays date
                 selectedDate = DateTime.Today;
-                selectedDate.Value.ToString("yyyy/dd/mm");
             }
 
             // Update the data model with the selected date
