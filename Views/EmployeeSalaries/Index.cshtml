@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => employee.Salary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => employee.Date)
+                @employee.Date.ToString("MM/dd/yyyy")
             </td>
         </tr>
     }

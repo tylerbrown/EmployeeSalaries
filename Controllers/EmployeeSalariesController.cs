@@ -28,6 +28,7 @@ namespace EmployeeSalaries.Controllers
             {
                 // Default to todays date
                 selectedDate = DateTime.Today;
+                selectedDate.Value.ToString("yyyy/dd/mm");
             }
 
             // Update the data model with the selected date
@@ -71,38 +72,6 @@ namespace EmployeeSalaries.Controllers
                 totalSalaryThread.Join();
             }
 
-
-            /*
-
-            // Make api call to get latest salaries prior to selected date
-            callAPI = client.GetAsync("EmployeeSalarySearchAllEntries?selectedDate=" + selectedDate);
-            callAPI.Wait();
-
-            returnData = callAPI.Result;
-
-            if (returnData.IsSuccessStatusCode)
-            {
-                var data = returnData.Content.ReadAsAsync<IList<SalaryTable>>();
-                data.Wait();
-                IEnumerable<SalaryTable> allEntries = data.Result;
-
-                Thread averageSalaryThread = new Thread(() => calculateCombinedAverageSalaries(allEntries, selectedDate));
-                averageSalaryThread.Start();
-                averageSalaryThread.Join();
-            }
-
-            SalaryTable salaryTable;
-
-
-
-            //Thread totalSalaryThread = new Thread(new ThreadStart(calculateTotalEmployeeSalary));
-            Thread totalSalaryThread = new Thread(() => calculateTotalToDate(selectedDate));
-            totalSalaryThread.Start();
-
-
-            // join so that page will wait untill thread are done
-            totalSalaryThread.Join();
-            */
             return View(employeeDataDisplay);
         }
 
@@ -111,13 +80,6 @@ namespace EmployeeSalaries.Controllers
          */
         public void calculateCombinedAverageSalaries(IEnumerable<EmployeeDataModel> allEmployeeSalaries)
         {
-            /*
-            employeeDataDisplay.averageSalary = allEmployeeSalaries
-                .GroupBy(e => e.EmpID)
-                .Select(e => e.Select(s => s.Salary).Average())
-                .Sum();
-            */
-
             // Define variable
             long totalSalary = 0;
             long averageSalary = 0;
