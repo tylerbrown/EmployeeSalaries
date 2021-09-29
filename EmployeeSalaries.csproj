@@ -165,8 +165,6 @@
     <Compile Include="Controllers\EmployeeSalariesController.cs" />
     <Compile Include="Controllers\EmployeeSalarySearchAllEntriesController.cs" />
     <Compile Include="Controllers\EmployeeSalarySearchController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="EmployeeSalariesModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
